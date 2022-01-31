@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, CircularProgress } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Appbar from "../../components/appbar";
 import TradeList from "../../components/trade-item";
-import TradeCard from "../../components/trade-item";
 
 export const Home = () => {
   const [page, setPage] = useState(1);
@@ -17,7 +17,7 @@ export const Home = () => {
         return res.data.data;
       });
 
-  const { isLoading, isError, error, data, isFetching, isPreviousData } =
+  const { isLoading, error, data, isFetching } =
     useQuery(["projects", page], () => fetchProjects(page), {
       keepPreviousData: true,
     });
@@ -25,7 +25,6 @@ export const Home = () => {
   useEffect(() => {
     if (data) {
       setExpandableData(expandableData.concat(data));
-      debugger
     }
   }, [data]);
 

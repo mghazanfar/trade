@@ -27,7 +27,6 @@ export default function LoginWithDialog() {
     <UserConsumer>
       {({ user, setUser }) => {
         const isLoggedIn = user && user.name;
-        debugger
         return (
           <Box>
             {isLoggedIn ? (

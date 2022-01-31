@@ -10,7 +10,7 @@ const queryClient = new QueryClient()
 
 
 function App() {
-  const [user, setUser] = useState<any>({user:null, setUser:(credentials:any)=>{debugger;setUser({...user, user:credentials})}})
+  const [user, setUser] = useState<any>({user:null, setUser:(credentials:any)=>{setUser({...user, user:credentials})}})
 
   return (
       <UserProvider value={user}>
