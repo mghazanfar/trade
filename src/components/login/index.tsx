@@ -4,8 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Avatar, Box } from "@material-ui/core";
+import { Avatar, Box, IconButton } from "@material-ui/core";
 import { UserConsumer } from "../../store/user.context";
+import { ExitToApp } from "@material-ui/icons";
 
 export default function LoginWithDialog() {
   const [open, setOpen] = React.useState(false);
@@ -30,7 +31,14 @@ export default function LoginWithDialog() {
         return (
           <Box>
             {isLoggedIn ? (
-              <Avatar src={user.avatar} alt={user.name} />
+              <Box display={"flex"} alignItems={"center"}>
+                <IconButton onClick={() => setUser(null)}>
+                  <ExitToApp />
+                </IconButton>
+                <Box ml={2}>
+                  <Avatar src={user.avatar} alt={user.name} />
+                </Box>
+              </Box>
             ) : (
               <Button
                 variant="outlined"

@@ -163,7 +163,7 @@ function ResponsiveDrawer(props: any) {
               paper: classes.drawerPaper,
             }}
             variant="permanent"
-            open
+            open={false}
           >
             {drawer}
           </Drawer>
