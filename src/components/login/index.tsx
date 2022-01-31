@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Box } from "@material-ui/core";
+import { Avatar, Box } from "@material-ui/core";
+import { UserConsumer } from "../../store/user.context";
 
 export default function LoginWithDialog() {
   const [open, setOpen] = React.useState(false);
@@ -18,41 +18,85 @@ export default function LoginWithDialog() {
     setOpen(false);
   };
 
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Login
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Login</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Password"
-            type="password"
-            fullWidth
-          />
-          <Box my={2}>
-            <Button variant="contained" fullWidth color="primary">
-              Login
-            </Button>
+    <UserConsumer>
+      {({ user, setUser }) => {
+        const isLoggedIn = user && user.name;
+        debugger
+        return (
+          <Box>
+            {isLoggedIn ? (
+              <Avatar src={user.avatar} alt={user.name} />
+            ) : (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleClickOpen}
+              >
+                Login
+              </Button>
+            )}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">Login</DialogTitle>
+              <DialogContent>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Username"
+                  type="username"
+                  fullWidth
+                  value={credentials.username}
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, username: e.target.value })
+                  }
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Password"
+                  type="password"
+                  fullWidth
+                  value={credentials.password}
+                  onChange={(e) =>
+                    setCredentials({ ...credentials, password: e.target.value })
+                  }
+                />
+                <Box my={2}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    color="primary"
+                    disabled={
+                      credentials.username.length < 5 ||
+                      credentials.password.length < 5
+                    }
+                    onClick={() => {
+                      setUser({
+                        name: "Ali",
+                        avatar: "https://v4.mui.com/static/images/avatar/1.jpg",
+                      });
+                      setOpen(false);
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Box>
+              </DialogContent>
+            </Dialog>
           </Box>
-        </DialogContent>
-      </Dialog>
-    </div>
+        );
+      }}
+    </UserConsumer>
   );
 }
