@@ -8,7 +8,6 @@ export const Trade = () => {
     <UserConsumer>
       {({user}) => {
         let isLoggedIn = user && user.name;
-        debugger
         return (
           <Appbar>
             <Box display={"flex"} justifyContent={"center"}>
